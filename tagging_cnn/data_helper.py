@@ -100,10 +100,23 @@ def preprocess(data_file, vocab_file, padding_size, test=False): # 단어를 숫
         print('레이블 데이터의 크기(shape):', y.shape)
         return x, y, vocab_size
     else:
-        word_dict = json.load(open(vocab_file, 'r'))
+        #word_dict = json.load(open(vocab_file, 'r'))
+        tokenizer = Tokenizer()
+        TextData = np.array(TextData)
+        tokenizer.fit_on_texts(TextData)
+        x = tokenizer.texts_to_sequences(TextData)
+        word_dict = tokenizer.word_index
         vocabulary = word_dict.keys()
-        x = [[word_dict[each_word] if each_word in vocabulary else 1 for each_word in each_sentence.split()] for each_sentence in x_text]
-        x = preprocessing.sequence.pad_sequences(x, maxlen=padding_size,
+        #x = [[word_dict[each_word] if each_word in vocabulary else 1 for each_word in each_sentence.split()] for each_sentence in TextData]
+        x = pad_sequences(x, maxlen=padding_size,
                                                  padding='post', truncating='post')
+        idx_encode = preprocessing.LabelEncoder()  # 사이킷런 툴임
+        idx_encode.fit(LabelData)
+
+        LabelData = idx_encode.transform(LabelData) # 고유한 정수로 변환
+        label_idx = dict(zip(list(idx_encode.classes_), idx_encode.transform(list(idx_encode.classes_))))
+        print(label_idx)
+        y = to_categorical(np.asarray(LabelData))
+        
         print("Shape of test data: {}\n".format(np.shape(x)))
         return x, y

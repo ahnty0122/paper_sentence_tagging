@@ -40,7 +40,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--num_classes', default=9, type=int, help='Number of target classes.(default=18)') # 우린 class 9개니깐 9개
     parser.add_argument('-l', '--regularizers_lambda', default=0.01, type=float, help='L2 regulation parameter.(default=0.01)')
     parser.add_argument('-b', '--batch_size', default=64, type=int, help='Mini-Batch size.(default=64)')
-    parser.add_argument('--epochs', default=10, type=int, help='Number of epochs.(default=10)')
+    parser.add_argument('--epochs', default=5, type=int, help='Number of epochs.(default=10)')
     parser.add_argument('--fraction_validation', default=0.05, type=float, help='The fraction of validation.(default=0.05)')
     parser.add_argument('--results_dir', default='./results/', type=str, help='The results dir including log, model, vocabulary and some images.(default=./results/)')
     args = parser.parse_args()
