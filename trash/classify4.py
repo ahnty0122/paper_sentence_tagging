@@ -1,9 +1,17 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[ ]:
+
+
+#-*-coding:utf-8-sig-*- 
 import sys
 import argparse
-
+import pandas as pd
 import torch
 import torch.nn as nn
 from torchtext import data
+from collections import Counter
 
 from simple_ntc.models.rnn import RNNClassifier
 from simple_ntc.models.cnn import CNNClassifier
@@ -16,9 +24,10 @@ def define_argparser():
     p = argparse.ArgumentParser()
 
     p.add_argument('--model_fn', required=True)
+    #p.add_argument('--test_fn', required=True)
     p.add_argument('--gpu_id', type=int, default=-1)
     p.add_argument('--batch_size', type=int, default=256)
-    p.add_argument('--top_k', type=int, default=1)
+    p.add_argument('--top_k', type=int, default=2)
     p.add_argument('--max_length', type=int, default=256)
     
     p.add_argument('--drop_rnn', action='store_true')
@@ -28,19 +37,19 @@ def define_argparser():
 
     return config
 
-
 def read_text(max_length=256):
-    '''
-    Read text from standard input for inference.
-    '''
-    lines = []
+    text = pd.read_csv("./simple_ntc/data/test_token.tsv", delimiter='\t', names=['tag', 'sentence'])
+    text2 = text['sentence']
 
-    for line in sys.stdin:
+    lines =[]
+
+    for line in text2:
         if line.strip() != '':
-            lines += [line.strip().split(' ')[:max_length]]
+            lines += [line.strip().split(' ')][:max_length]
 
-    return lines
+    label = text['tag']
 
+    return lines, label
 
 def define_field():
     '''
@@ -62,6 +71,7 @@ def define_field():
 
 
 def main(config):
+    
     saved_data = torch.load(
         config.model_fn,
         map_location='cpu' if config.gpu_id < 0 else 'cuda:%d' % config.gpu_id
@@ -80,7 +90,7 @@ def main(config):
     text_field.vocab = vocab
     label_field.vocab = classes
 
-    lines = read_text(max_length=config.max_length)
+    lines, label = read_text(max_length=config.max_length)
 
     with torch.no_grad():
         ensemble = []
@@ -142,14 +152,58 @@ def main(config):
 
         probs, indice = y_hats.topk(config.top_k)
         '''
-        for i in range(len(lines)):
+        for i in range(30):
+            
             sys.stdout.write('%s\t%s\n' % (
                 ' '.join([classes.itos[indice[i][j]] for j in range(config.top_k)]), 
                 ' '.join(lines[i])
-            ))
+                ))
+        '''    
+            #print([indice[i][j] for j in range(config.top_k)], [classes.itos[indice[i][j]] for j in range(config.top_k)], label[i])
+        '''    
+        correct = 0
+        total = 0
+        for i in range(len(lines)):
+            if [label[i]] == [classes.itos[indice[i][j]] for j in range(config.top_k)]:
+                correct += 1
+        print('Accuracy: %d %%' % (100 * correct / len(lines)))        
         '''
-        print(classes.itos)
+        
 
+        count1 = 0
+        count2 = 0
+        count3 = 0
+        count4 = 0
+        cnt = Counter()
+        for i in range(len(lines)):
+            if [label[i]] == [classes.itos[indice[i][0]]] or [classes.itos[indice[i][1]]] :
+                if abs(probs[i][0] - probs[i][1]) <= 0.1 :
+                    twoclasses = [ classes.itos[indice[i][0]] , classes.itos[indice[i][1]] ]
+                    diff = float(abs(probs[i][0] - probs[i][1]))
+                    for two in twoclasses :
+                        cnt[two] += 1
+        print(cnt)                
+                    two classes = [ [가설 설정, 이론모형] , [가설 설정, 데이터처리] ,
+                    
+                    
+'''
+                    for t in twoclasses :
+                        if t == [ '가설 설정', '이론/모형' ] :
+                            count1 += 1
+                        if t == [ '가설 설정', '데이터처리'] :
+                            count2 += 1
+                        if t == [ '가설 설정', '대상 데이터' ] :
+                            count3 += 1
+                        if t == [ '가설 설정', '제안 방법'] :
+                            count4 += 1
+                        
+        print('가설 설정, 이론/모형 : ', count1)
+        print('가설 설정, 데이터처리 : ', count2)
+        print('가설 설정, 대상 데이터 : ', count3)
+        print('가설 설정, 제안 방법 : ', count4)
+'''                        
+                            
+                            
 
 if __name__ == '__main__':
     config = define_argparser()

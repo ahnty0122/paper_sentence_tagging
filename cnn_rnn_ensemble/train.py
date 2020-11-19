@@ -11,6 +11,11 @@ from simple_ntc.data_loader import DataLoader
 from simple_ntc.models.rnn import RNNClassifier
 from simple_ntc.models.cnn import CNNClassifier
 
+## train.py 는 가장 큰 개념. train.py 안에 data loader 와 trainer 의 상호작용이 있음.
+## data loader 에서 mini batch 단위로 데이터를 trainer 에 넘겨주면
+## model 에서 cnn, rnn 을 받아서 trainer 에서 train, valid 로 나눠 트레이닝 시키는 것임.
+
+
 def define_argparser():
     '''
     Define argument parser to set hyper-parameters.
@@ -22,9 +27,13 @@ def define_argparser():
     
     p.add_argument('--gpu_id', type=int, default=-1)
     p.add_argument('--verbose', type=int, default=2)
+    ## 2는 iteration 마다 출력, 1은 에폭마다
 
     p.add_argument('--min_vocab_freq', type=int, default=3)
+    ## 몇번 이상 나오는 단어만 학습하도록. 
+    ## 원래는 5였는데 태영이 3으로 수정함.
     p.add_argument('--max_vocab_size', type=int, default=999999)
+    ## vocab 사이즈 제어 가능. 
 
     p.add_argument('--batch_size', type=int, default=256)
     p.add_argument('--n_epochs', type=int, default=10)
@@ -33,7 +42,7 @@ def define_argparser():
     p.add_argument('--dropout', type=float, default=.3)
 
     p.add_argument('--max_length', type=int, default=256)
-    
+    ## 256까지만. 나머지는 잘라버림.
     p.add_argument('--rnn', action='store_true')
     p.add_argument('--hidden_size', type=int, default=512)
     p.add_argument('--n_layers', type=int, default=4)
@@ -43,7 +52,13 @@ def define_argparser():
     p.add_argument('--window_sizes', type=int, nargs='*', default=[3, 4, 5])
     p.add_argument('--n_filters', type=int, nargs='*', default=[100, 100, 100])
 
-    config = p.parse_args()
+    ## rnn, cnn 동시 학습가능.
+    ## classify.py 에서 앙상블함. 
+    ## rnn 은 전체 문장의 흐름. context 를 많이 보고
+    ## cnn 은 실제 문구나 절, 단어의 패턴이 있나 없나를 보기 때문에. 앙상블시킴.
+    
+    
+    config = p.parse_args() ## config 받도록.
 
     return config
 
@@ -60,9 +75,9 @@ def main(config):
     print(
         '|train| =', len(loaders.train_loader.dataset),
         '|valid| =', len(loaders.valid_loader.dataset),
-    )
+    ) ## 여기서 문장 개수를 알 수 있음.
     
-    vocab_size = len(loaders.text.vocab)
+    vocab_size = len(loaders.text.vocab)  ## loaders 안에서 text set 의 vocab (train set 기준)
     n_classes = len(loaders.label.vocab)
     print('|vocab| =', vocab_size, '|classes| =', n_classes)
     
