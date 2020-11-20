@@ -16,21 +16,21 @@
 
 ## Pre-process
 
-#### Format
-<img width="800" alt="data" src="https://user-images.githubusercontent.com/61795757/99826322-8ec2fa00-2b9b-11eb-99dd-b9f9f8058c25.PNG">
+1. Format
+![data](https://user-images.githubusercontent.com/61795757/99827356-dc8c3200-2b9c-11eb-8ac9-c01c80485621.PNG)
 Input file 형식: (tag  sentence) 탭으로 분리된 파일 (.tsv)
 My data: 63437개의 data (논문 태그, 논문 문장)
 
-#### Tokenization
+2. Tokenization
 카카오 형태소 분석기 Khaiii Tokenizer을 이용해 문장 토큰화
 
-#### Dataset shuffle and Split, Cross Validation
+3. Dataset shuffle and Split, Cross Validation
 Train set : Test set = 8:2
 Validation set: Train의 20% 
 
 ## Model
 
-### cnn, rnn ensemble
+1. cnn, rnn ensemble
 
 #### train.py
 cnn, rnn 모두 학습
@@ -42,7 +42,7 @@ cnn, rnn 모두 학습
 모두 추론 적용
 - 추론 적용 결과 값들의 평균 구해서 k 번째로 높은 순위를 가진 라벨과 문장 출력 (top-k 설정)
 
-### KcBERT
+2. KcBERT
 
 #### train.py
 <img width="560" alt="kc-bert" src="https://user-images.githubusercontent.com/61795757/99826428-b4500380-2b9b-11eb-8ead-a31097f7907e.PNG">
@@ -57,9 +57,9 @@ Pre-trained BERT model의 weights 로드 --> fine-tuning 수행
 ![result](https://user-images.githubusercontent.com/61795757/99826609-f1b49100-2b9b-11eb-9bba-3255adcd6341.png)
 
 - 학습 조건 및 Accuracy
-  <img width="400" alt="final_model" src="https://user-images.githubusercontent.com/61795757/99826922-553ebe80-2b9c-11eb-85bf-50b7de3f1cba.PNG">
+<img width="400" alt="final_model" src="https://user-images.githubusercontent.com/61795757/99826922-553ebe80-2b9c-11eb-85bf-50b7de3f1cba.PNG">
 
 ## Reference
 - [Simple Neural Text Classification](https://github.com/kh-kim/simple-ntc])
 - [KcBERT: Korean comments BERT](https://github.com/Beomi/KcBERT)
-- [Khaiii tokenizer] (https://github.com/kakao/khaiii)
+- [Khaiii tokenizer](https://github.com/kakao/khaiii)
