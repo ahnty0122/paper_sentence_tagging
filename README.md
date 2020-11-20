@@ -36,9 +36,10 @@ Validation set: Train의 20%
 __1. train.py__
 cnn, rnn 모두 학습
 
-__2. classify.py__
 <img width="557" alt="cnn,rnn emsemble" src="https://user-images.githubusercontent.com/61795757/99826409-aa2e0500-2b9b-11eb-81d8-f2b1df806ee1.PNG">
 
+
+__2. classify.py__
 
 (Best CNN + Best RNN)/2
 
