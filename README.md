@@ -1,5 +1,5 @@
 # Pater sentence tagging 논문 문장 의미 태깅
-<img width="462" alt="캡처" src="https://user-images.githubusercontent.com/61795757/99826724-19a3f480-2b9c-11eb-834a-c162730c52c4.PNG">
+<img width="800" alt="캡처" src="https://user-images.githubusercontent.com/61795757/99826724-19a3f480-2b9c-11eb-834a-c162730c52c4.PNG">
 논문의 구조에 따라 문장들이 의도하는 역할을 구분하는 라벨(태그) 부착
 연구목적: 문제정의, 가설설정, 기술정의
 연구방법: 대상데이터, 분석방법, 제안방법, 이론/모형
@@ -17,7 +17,7 @@
 ## Pre-process
 
 #### Format
-<img width="276" alt="data" src="https://user-images.githubusercontent.com/61795757/99826322-8ec2fa00-2b9b-11eb-99dd-b9f9f8058c25.PNG">
+<img width="800" alt="data" src="https://user-images.githubusercontent.com/61795757/99826322-8ec2fa00-2b9b-11eb-99dd-b9f9f8058c25.PNG">
 Input file 형식: (tag  sentence) 탭으로 분리된 파일 (.tsv)
 My data: 63437개의 data (논문 태그, 논문 문장)
 
@@ -57,9 +57,9 @@ Pre-trained BERT model의 weights 로드 --> fine-tuning 수행
 ![result](https://user-images.githubusercontent.com/61795757/99826609-f1b49100-2b9b-11eb-9bba-3255adcd6341.png)
 
 - 학습 조건 및 Accuracy
-<img width="570" alt="final_model" src="https://user-images.githubusercontent.com/61795757/99826922-553ebe80-2b9c-11eb-85bf-50b7de3f1cba.PNG">
+  <img width="400" alt="final_model" src="https://user-images.githubusercontent.com/61795757/99826922-553ebe80-2b9c-11eb-85bf-50b7de3f1cba.PNG">
 
 ## Reference
 - [Simple Neural Text Classification](https://github.com/kh-kim/simple-ntc])
 - [KcBERT: Korean comments BERT](https://github.com/Beomi/KcBERT)
-- [카카오 형태소 분석기] (https://github.com/kakao/khaiii)
+- [Khaiii tokenizer] (https://github.com/kakao/khaiii)
