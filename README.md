@@ -20,8 +20,7 @@
 Input file 형식: (tag  sentence) 탭으로 분리된 파일 (.tsv)
 My data: 63437개의 data (논문 태그, 논문 문장)
 
-[data](https://user-images.githubusercontent.com/61795757/99827356-dc8c3200-2b9c-11eb-8ac9-c01c80485621.PNG)
-
+![data](https://user-images.githubusercontent.com/61795757/99828174-f417ea80-2b9d-11eb-8ee0-55913230ed72.PNG)
 
 2. Tokenization
 카카오 형태소 분석기 Khaiii Tokenizer을 이용해 문장 토큰화
@@ -39,7 +38,10 @@ cnn, rnn 모두 학습
 
 __2. classify.py__
 <img width="557" alt="cnn,rnn emsemble" src="https://user-images.githubusercontent.com/61795757/99826409-aa2e0500-2b9b-11eb-81d8-f2b1df806ee1.PNG">
+
+
 (Best CNN + Best RNN)/2
+
 - 저장된 cnn 모델 중 가장 좋은 성능을 가진 모델과 rnn 모델 중 가장 좋은 성능을 가진 best 모델 
 모두 추론 적용
 - 추론 적용 결과 값들의 평균 구해서 k 번째로 높은 순위를 가진 라벨과 문장 출력 (top-k 설정)
@@ -47,7 +49,9 @@ __2. classify.py__
 ### KcBERT
 
 __1. train.py__
+
 <img width="560" alt="kc-bert" src="https://user-images.githubusercontent.com/61795757/99826428-b4500380-2b9b-11eb-8ead-a31097f7907e.PNG">
+
 Pre-trained BERT model의 weights 로드 --> fine-tuning 수행
 
 __2. classify.py__
@@ -56,7 +60,8 @@ __2. classify.py__
 
 ### Inference result
 - 실행 결과 (라벨, 문장)
-[result](https://user-images.githubusercontent.com/61795757/99826609-f1b49100-2b9b-11eb-9bba-3255adcd6341.png)
+
+![결과](https://user-images.githubusercontent.com/61795757/99828145-eb271900-2b9d-11eb-8ecf-f81449dbb5b2.png)
 
 - 학습 조건 및 Accuracy
 <img width="400" alt="final_model" src="https://user-images.githubusercontent.com/61795757/99826922-553ebe80-2b9c-11eb-85bf-50b7de3f1cba.PNG">
