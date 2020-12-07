@@ -23,7 +23,8 @@ My data: 63437개의 data (논문 태그, 논문 문장)
 ![data](https://user-images.githubusercontent.com/61795757/99828174-f417ea80-2b9d-11eb-8ee0-55913230ed72.PNG)
 
 2. Pre-process
-정규표현식을 통한 불용어제거, 띄어쓰기 수정, 전각문자 반각문자 치환 --> txt 파일에 넣어 refine.py 로 일괄적 처리
+정규표현식을 통한 불용어제거, 띄어쓰기 수정, 전각문자 반각문자 치환
+- txt 파일에 넣어 refine.py 로 일괄적 처리
 
 3. Tokenization
 카카오 형태소 분석기 Khaiii Tokenizer을 이용해 문장 토큰화
@@ -53,7 +54,7 @@ __2. classify.py__
 #### Customized model
 Top 2 결과를 출력했을 때 1st label 과 2nd label 정확도 차이가 작은 조합을 선별해 오답노트 형식처럼 binary classification 모델로 재훈련
 
-![custom](https://user-images.githubusercontent.com/59900689/101310352-fc587100-3891-11eb-8ca4-5ab845c2143c.png)
+<img width = "560" src="https://user-images.githubusercontent.com/59900689/101310352-fc587100-3891-11eb-8ca4-5ab845c2143c.png">
 
 
 ### KcBERT
