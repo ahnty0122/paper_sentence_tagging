@@ -22,10 +22,13 @@ My data: 63437개의 data (논문 태그, 논문 문장)
 
 ![data](https://user-images.githubusercontent.com/61795757/99828174-f417ea80-2b9d-11eb-8ee0-55913230ed72.PNG)
 
-2. Tokenization
+2. Pre-process
+정규표현식을 통한 불용어제거, 띄어쓰기 수정, 전각문자 반각문자 치환 --> txt 파일에 넣어 refine.py 로 일괄적 처리
+
+3. Tokenization
 카카오 형태소 분석기 Khaiii Tokenizer을 이용해 문장 토큰화
 
-3. Dataset shuffle and Split, Cross Validation
+4. Dataset shuffle and Split, Cross Validation
 Train set : Test set = 8:2
 Validation set: Train의 20% 
 
@@ -46,6 +49,12 @@ __2. classify.py__
 - 저장된 cnn 모델 중 가장 좋은 성능을 가진 모델과 rnn 모델 중 가장 좋은 성능을 가진 best 모델 
 모두 추론 적용
 - 추론 적용 결과 값들의 평균 구해서 k 번째로 높은 순위를 가진 라벨과 문장 출력 (top-k 설정)
+
+#### Customized model
+Top 2 결과를 출력했을 때 1st label 과 2nd label 정확도 차이가 작은 조합을 선별해 오답노트 형식처럼 binary classification 모델로 재훈련
+
+![custom](https://user-images.githubusercontent.com/59900689/101310352-fc587100-3891-11eb-8ca4-5ab845c2143c.png)
+
 
 ### KcBERT
 
