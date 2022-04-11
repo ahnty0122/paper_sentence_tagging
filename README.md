@@ -80,5 +80,6 @@ __2. classify.py__
 
 ## Reference
 - [Simple Neural Text Classification](https://github.com/kh-kim/simple-ntc)
-- [KcBERT: Korean comments BERT](https://github.com/Beomi/KcBERT)
 - [Khaiii tokenizer](https://github.com/kakao/khaiii)
+- [KcBERT: Korean comments BERT](https://github.com/Beomi/KcBERT)
+
